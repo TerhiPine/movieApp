@@ -5,49 +5,48 @@ export enum SearchType {
     episode = 'episode',
 }
 export interface SearchResult {
-    Title: string
-    Year: string
-    Poster: string
-    imdbID: string
+    Title: string;
+    Year: string;
+    Poster: string;
+    imdbID: string;
     Type: string;
 }
 export interface SearchError {
-    Response: string
+    Response: string;
     Error: string;
 }
 export interface DetailsResult {
-    Genre: string
-    Title: string
-    Year: string
-    Poster: string
-    Plot: string
-    imdbRating: string
-    Director: string
-    Actors: string
+    Genre: string;
+    Title: string;
+    Year: string;
+    Poster: string;
+    Plot: string;
+    imdbRating: string;
+    Director: string;
+    Actors: string;
     Website: string;
+    Awards: string;
 }
 export const useApi = () => {
-    let url = 'http://www.omdbapi.com/?apikey=64342d67'
-    //*let apiKey = '64342d67'
-    //*http://www.omdbapi.com/?i=tt3896198&apikey=64342d67
+    let url = 'http://www.omdbapi.com/?apikey=64342d67';
+    let apiKey = '64342d67'
+    //'http://www.omdbapi.com/?apikey=64342d67'
 
-    //videossa &apiKey on &apikey
-    //var url = "https://www.omdbapi.com/?i=tt3896198&apikey=**{API_KEY}**" + "&t="
- //+ encodeURI(name) + "&y=" + year + "tomatoes=true";
 
     const searchData = async (
         title: string,
         type: SearchType,
         ): Promise<SearchResult[] | SearchError> => {
         const result = await fetch(
-            `${url}&t=${encodeURI(title)}&type=${type}`
-        );
+            `${url}&s=${encodeURI(title)}&type=${type}`
+        )
 
-        return result.json();
+        return result.json()
     }
 
-    const getDetails = async (id: string): Promise<DetailsResult> => {
-        const result = await fetch(`${url}?i=${id}&plot=full&&apiKey={apiKey}`)
+    const getDetails = async (id: string): Promise<DetailsResult | SearchError> => {
+        const result = await fetch(
+            `${url}&?i=${id}&plot=full`)
         return result.json()
     }
 
